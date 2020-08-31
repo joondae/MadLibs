@@ -11,8 +11,9 @@ public class MadLibs {
 		ArrayList<String> nouns = new ArrayList<String>();
 		
 		//1. Read a nouns.txt file and store its list of nouns into an arraylist.
-		nouns = readAndStoreNouns("nouns.txt");
+		nouns = readAndStoreNouns("MadlibsTestFile.txt");
 		
+		System.out.println(nouns);
 		//2. Read a verbs.txt file and store its list of verbs into an arraylist.
 		
 		//3. Read an adjectives.txt file and store its list of adjectives into an arraylist.
@@ -41,9 +42,22 @@ public class MadLibs {
 			e.printStackTrace();
 		}
 		
+		String noun = "";
+		
 		try {
 			while(br.ready()) {
+				char character = (char) br.read();
 				
+				//to account for /n (LF) and /r (CR)
+				//for some reason all new lines in .txt are CR except for last one???
+				//*assumed new line after last word in file?
+				if((int) character == 10 || (int) character == 13) {
+					list.add(noun);
+					noun = "";
+				}
+				else {
+					noun += character;
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
